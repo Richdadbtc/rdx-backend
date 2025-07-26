@@ -50,6 +50,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
+<<<<<<< HEAD
 app.use('/api/user', require('./routes/user'));
 app.use('/api/wallet', require('./routes/wallet'));
 app.use('/api/transactions', require('./routes/transactions'));
@@ -57,6 +58,12 @@ app.use('/api/trading', require('./routes/trading'));
 app.use('/api/crypto', require('./routes/crypto'));
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/rewards', require('./routes/rewards'));
+=======
+app.use('/api/wallet', require('./routes/wallet'));
+app.use('/api/transactions', require('./routes/transactions'));
+app.use('/api/trading', require('./routes/trading'));
+app.use('/api/crypto', require('./routes/crypto')); // Add this line
+>>>>>>> 1c7fda1d166e3a37d4bc00e963bd1f9907eeafb8
 app.use('/api/admin', require('./routes/admin'));
 // Health check
 app.get('/api/health', (req, res) => {

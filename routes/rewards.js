@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../middleware/auth');
+<<<<<<< HEAD
 const Reward = require('../models/Reward');
 const UserReferral = require('../models/UserReferral');
 const DailyCheckIn = require('../models/DailyCheckIn');
@@ -243,10 +244,18 @@ router.post('/daily-checkin', auth, async (req, res) => {
       error: error.message
     });
   }
+=======
+const router = express.Router();
+
+// Get user rewards
+router.get('/', auth, async (req, res) => {
+  // Implementation needed
+>>>>>>> 1c7fda1d166e3a37d4bc00e963bd1f9907eeafb8
 });
 
 // Claim reward
 router.post('/claim/:rewardId', auth, async (req, res) => {
+<<<<<<< HEAD
   try {
     const reward = await Reward.findOne({
       _id: req.params.rewardId,
@@ -297,6 +306,19 @@ router.get('/daily-config', auth, async (req, res) => {
       error: error.message
     });
   }
+=======
+  // Implementation needed
+});
+
+// Daily check-in
+router.post('/daily-checkin', auth, async (req, res) => {
+  // Implementation needed
+});
+
+// Get referral data
+router.get('/referral', auth, async (req, res) => {
+  // Implementation needed
+>>>>>>> 1c7fda1d166e3a37d4bc00e963bd1f9907eeafb8
 });
 
 module.exports = router;
