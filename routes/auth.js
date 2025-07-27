@@ -70,6 +70,7 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     // Create default wallet
+    // Google Sign In (around line 329)
     const wallet = new Wallet({
       userId: user._id,
       addresses: {
@@ -79,6 +80,8 @@ router.post('/register', async (req, res) => {
         PI: `pi${crypto.randomBytes(20).toString('hex')}`
       }
     });
+    
+    // Apply the same fix to Facebook (line 386) and Apple (line 449) routes
     await wallet.save();
 
     // Send OTP email

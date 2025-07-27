@@ -6,7 +6,9 @@ const rewardSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   currency: { type: String, required: true },
   claimed: { type: Boolean, default: false },
-  description: String
+  description: String,
+  title: String,
+  referralCode: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('Reward', rewardSchema);
