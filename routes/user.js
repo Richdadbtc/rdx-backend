@@ -23,4 +23,23 @@ router.get('/stats', auth, async (req, res) => {
   // Implementation needed
 });
 
+// Update FCM token
+router.post('/fcm-token', auth, async (req, res) => {
+  try {
+    const { fcmToken } = req.body;
+    
+    await User.findByIdAndUpdate(req.user.id, { fcmToken });
+    
+    res.json({
+      success: true,
+      message: 'FCM token updated successfully'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+});
 module.exports = router;

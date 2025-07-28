@@ -299,4 +299,25 @@ router.get('/daily-config', auth, async (req, res) => {
   }
 });
 
+// After successful daily check-in
+if (checkInResult.success) {
+  // Create notification
+  const notification = new Notification({
+    userId: req.user.id,
+    title: 'Daily Reward Claimed! 🎁',
+    message: `You've earned ${reward.amount} ${reward.currency}. Current streak: ${newStreak} days!`,
+    type: 'reward'
+  });
+  
+  await notification.save();
+  
+  // Send push notification
+  await sendPushNotification(
+    req.user.id,
+    'Daily Reward Claimed! 🎁',
+    `You've earned ${reward.amount} ${reward.currency}`,
+    'reward'
+  );
+}
+
 module.exports = router;

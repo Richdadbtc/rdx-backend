@@ -70,6 +70,10 @@ const userSchema = new mongoose.Schema({
   facebookId: String,
   appleId: String,
   profilePicture: String,
+  fcmToken: {
+    type: String,
+    default: null
+  },
 }, {
   timestamps: true
 });
