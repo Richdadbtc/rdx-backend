@@ -220,6 +220,32 @@ router.post('/daily-checkin', auth, async (req, res) => {
     });
     await reward.save();
     
+    // Create notification after successful check-in
+    try {
+      const Notification = require('../models/Notification');
+      const { sendPushNotification } = require('../utils/firebase');
+      
+      const notification = new Notification({
+        userId: req.user.id,
+        title: 'Daily Reward Claimed! 🎁',
+        message: `You've earned ${reward.amount} ${reward.currency}. Current streak: ${newStreak} days!`,
+        type: 'reward'
+      });
+      
+      await notification.save();
+      
+      // Send push notification
+      await sendPushNotification(
+        req.user.id,
+        'Daily Reward Claimed! 🎁',
+        `You've earned ${reward.amount} ${reward.currency}`,
+        'reward'
+      );
+    } catch (notificationError) {
+      console.error('Failed to send notification:', notificationError);
+      // Don't fail the main operation if notification fails
+    }
+    
     res.json({
       success: true,
       data: {
@@ -298,26 +324,5 @@ router.get('/daily-config', auth, async (req, res) => {
     });
   }
 });
-
-// After successful daily check-in
-if (checkInResult.success) {
-  // Create notification
-  const notification = new Notification({
-    userId: req.user.id,
-    title: 'Daily Reward Claimed! 🎁',
-    message: `You've earned ${reward.amount} ${reward.currency}. Current streak: ${newStreak} days!`,
-    type: 'reward'
-  });
-  
-  await notification.save();
-  
-  // Send push notification
-  await sendPushNotification(
-    req.user.id,
-    'Daily Reward Claimed! 🎁',
-    `You've earned ${reward.amount} ${reward.currency}`,
-    'reward'
-  );
-}
 
 module.exports = router;
